@@ -1,0 +1,19 @@
+/* =Average rating above the price, below the title
+-------------------------------------------------------------- */
+.amazon-product {
+    &__rating {
+        // Typography
+        color: var(--clr-rating);
+        letter-spacing: .3125rem;
+        // Layout
+        width: 100%;
+        display: flex;
+        gap: .25rem;
+        margin: 0 0 1.75rem;
+
+        // Icons
+        svg {
+            width: 1.25rem;
+        }
+    }
+}

@@ -1,0 +1,1 @@
+$=jQuery,$(window).load((function(){$(".flexslider").flexslider({animation:"slide",controlNav:"thumbnails"}),$(".slick-slider").slick({infinite:!0,slidesToShow:3,slidesToScroll:1,responsive:[{breakpoint:768,settings:{slidesToShow:2}},{breakpoint:480,settings:{slidesToShow:1}}]}),$("#nav-tabs a").click((function(i){i.preventDefault(),$(this).tab("show")}))}));
