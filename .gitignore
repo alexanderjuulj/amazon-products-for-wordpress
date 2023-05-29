@@ -1,2 +1,4 @@
 **/.DS_Store
-**/.codekit3
+# General CodeKit files to ignore
+config.codekit
+config.codekit3
