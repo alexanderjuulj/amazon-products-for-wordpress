@@ -15,7 +15,7 @@
 include plugin_dir_path(__FILE__) . '/inc/post-type.php';
 
 // Check if ACF is installed
-if (!class_exists('ACF')) {
+if (class_exists('ACF')) {
     // Include ACF Pro fields
     include plugin_dir_path(__FILE__) . '/inc/acf-fields.php';
 }

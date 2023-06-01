@@ -1,38 +1,4 @@
 <?php 
-// Load ACF Variables
-$price = get_field('price_variation');
-
-$ratings = []; 
-// Check if rows exists.
-if( have_rows('review_repeater') ):
-
-    // Loop through rows.
-    while( have_rows('review_repeater') ) : the_row();
-
-        // Load sub field value.
-        $rating = get_sub_field('comments_rating');
-        
-        // Add the sub field value to the array.
-        $ratings[] = $rating;
-
-    // End loop.
-    endwhile;
-
-// If there is no value.
-else :
-    // Do nothing
-endif;
-
-// Check if ratings array is empty
-if (!empty($ratings)) {
-    // Calculate the average rating value
-    $average_rating = array_sum($ratings)/count($ratings);
-}
-// Check if there is an average rating value
-if (!empty($average_rating)) {
-    // Round the average rating to nearest .5 value
-    $rating = round($average_rating * 2) / 2;
-}
 // Icon for full star
 $star = '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16"><path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/></svg>';
 // Icon for half a star
@@ -40,12 +6,10 @@ $halfstar = '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="
 // Icon for an empty star
 $emptystar = '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16"><path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/></svg>';
 
-// Price fields
-$price_from = get_field('starting_price', get_the_ID());
-$price_to = get_field('end_price', get_the_ID());
-
 // Link to Amazon
 $link = get_field('amazon_link', get_the_ID());
+$link_review = get_field('amazon_link_reviews', get_the_ID());
+$amazon_rating = get_field('amazon_rating', get_the_ID());
 
 // Gallery
 $images = get_field('product_gallery');
@@ -73,45 +37,43 @@ get_header(); ?>
             <div class="col-12 col-lg-6">
                 <section>
                     <?php the_title('<h1 class="amazon-product__heading">', '</h1>'); ?>
-                    <div class="amazon-product__rating" role="img" aria-label="Rated <?php echo $rating; ?> out of <?php echo count($ratings); ?>">
-                        <span style="width:100%" class="sr-only">Rated <strong class="rating"><?php echo $rating; ?></strong> out of 5 based on <span class="rating"><?php echo count($ratings); ?></span> customer ratings</span>
-                        <?php 
-                        switch ($rating) {
-                            case 1:
-                                echo $star . $emptystar . $emptystar . $emptystar . $emptystar;
-                                break;
-                            case 1.5:
-                                echo $star . $halfstar . $emptystar . $emptystar . $emptystar;
-                                break;
-                            case 2:
-                                echo $star . $star . $emptystar . $emptystar . $emptystar;
-                                break;
-                            case 2.5:
-                                echo $star . $star . $halfstar . $emptystar . $emptystar;
-                                break;
-                            case 3:
-                                echo $star . $star . $star . $emptystar . $emptystar;
-                                break;
-                            case 3.5:
-                                echo $star . $star . $star . $halfstar . $emptystar;
-                                break;
-                            case 4:
-                                echo $star . $star . $star . $star . $emptystar;
-                                break;
-                            case 4.5:
-                                echo $star . $star . $star . $star . $halfstar;
-                                break;
-                            case 5:
-                                echo $star . $star . $star . $star . $star;
-                                break;
-                        } ?>
-                    </div>
-                    <div class="amazon-product__price">
-                        <?php if(!empty($price_from) && !empty($price_to)) {
-                            echo '<small>$</small> ' . $price_from . ' - <small>$</small> ' . $price_to;
-                        } elseif (!empty($price_from)) {
-                            echo '<small>$</small> ' . $price_from;
-                        } ?>
+                    <div class="amazon-product__rating" role="img" aria-label="Rated <?php echo $amazon_rating; ?> out of 5">
+                        <?php if($link_review) : ?>
+                        <a href="<?php echo $link_review; ?>" target="_blank" title="<?php _e('See our reviews on Amazon', 'apfwp');?>">
+                        <?php endif; ?>
+                            <?php 
+                            switch ($amazon_rating) {
+                                case 1:
+                                    echo $star . $emptystar . $emptystar . $emptystar . $emptystar;
+                                    break;
+                                case 1.5:
+                                    echo $star . $halfstar . $emptystar . $emptystar . $emptystar;
+                                    break;
+                                case 2:
+                                    echo $star . $star . $emptystar . $emptystar . $emptystar;
+                                    break;
+                                case 2.5:
+                                    echo $star . $star . $halfstar . $emptystar . $emptystar;
+                                    break;
+                                case 3:
+                                    echo $star . $star . $star . $emptystar . $emptystar;
+                                    break;
+                                case 3.5:
+                                    echo $star . $star . $star . $halfstar . $emptystar;
+                                    break;
+                                case 4:
+                                    echo $star . $star . $star . $star . $emptystar;
+                                    break;
+                                case 4.5:
+                                    echo $star . $star . $star . $star . $halfstar;
+                                    break;
+                                case 5:
+                                    echo $star . $star . $star . $star . $star;
+                                    break;
+                            } ?>
+                        <?php if($link_review) : ?>
+                        </a>
+                        <?php endif; ?>
                     </div>
                     <div class="amazon-product__description">
                         <?php the_content(); ?>
@@ -256,18 +218,6 @@ get_header(); ?>
                                         <h3 class="related-product__heading">
                                             <?php the_title(); ?>
                                         </h3>
-                                        <div class="related-product__price">
-                                            <?php 
-                                            // Price
-                                            $price_from = get_field('starting_price', get_the_ID());
-                                            $price_to = get_field('end_price', get_the_ID());
-
-                                            if(!empty($price_from) && !empty($price_to)) {
-                                                echo '<small>$</small> ' . $price_from . ' - <small>$</small> ' . $price_to;
-                                            } elseif (!empty($price_from)) {
-                                                echo '<small>$</small> ' . $price_from;
-                                            } ?>
-                                        </div>
                                     </a>
                                 </div>
                             </div>
@@ -276,57 +226,6 @@ get_header(); ?>
                         wp_reset_query()
                         ?>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="amazon-product__reviews">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <h2 class="text-center">
-                        <?php _e('Product Reviews', 'apfwp'); ?>
-                    </h2>
-                        <?php if( have_rows('review_repeater', get_the_ID()) ): ?>
-                            <div class="slick-slider">
-                                <?php while( have_rows('review_repeater', get_the_ID()) ): the_row(); 
-                                    $name = get_sub_field('comment_name', get_the_ID());
-                                    $review = get_sub_field('comment_review', get_the_ID());
-                                    $rating_val = get_sub_field('comments_rating', get_the_ID());
-                                    ?>
-                                    <div>
-                                        <div class="review">
-                                            <div class="review__rating">    
-                                                <?php switch ($rating_val) {
-                                                    case 1:
-                                                        echo $star . $emptystar . $emptystar . $emptystar . $emptystar;
-                                                        break;
-                                                    case 2:
-                                                        echo $star . $star . $emptystar . $emptystar . $emptystar;
-                                                        break;
-                                                    case 3:
-                                                        echo $star . $star . $star . $emptystar . $emptystar;
-                                                        break;
-                                                    case 4:
-                                                        echo $star . $star . $star . $star . $emptystar;
-                                                        break;
-                                                    case 5:
-                                                        echo $star . $star . $star . $star . $star;
-                                                        break;
-                                                } ?>
-                                            </div>
-                                            <h3 class="review__heading">
-                                                <?php echo $name; ?>
-                                            </h3>
-                                            <p class="review__description">
-                                                <?php echo $review; ?>
-                                            </p>
-                                        </div>
-                                    </div>
-                                <?php endwhile; ?>
-                            </div>
-                        <?php endif; ?>
                 </div>
             </div>
         </div>

@@ -15,5 +15,13 @@
         svg {
             width: 1.25rem;
         }
+
+        a {
+            color: var(--clr-rating);
+
+            &:hover {
+                color: var(--clr-rating);
+            }
+        }
     }
 }
