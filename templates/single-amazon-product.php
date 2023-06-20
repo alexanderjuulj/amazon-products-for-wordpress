@@ -10,6 +10,7 @@ $emptystar = '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class=
 $link = get_field('amazon_link', get_the_ID());
 $link_review = get_field('amazon_link_reviews', get_the_ID());
 $amazon_rating = get_field('amazon_rating', get_the_ID());
+$amazon_rating_amount = get_field('amazon_rating_amount', get_the_ID());
 
 // Gallery
 $images = get_field('product_gallery');
@@ -43,34 +44,39 @@ get_header(); ?>
                         <?php endif; ?>
                             <?php 
                             switch ($amazon_rating) {
-                                case 1:
+                                case ($amazon_rating > 1 && $amazon_rating <= 1.4):
                                     echo $star . $emptystar . $emptystar . $emptystar . $emptystar;
                                     break;
-                                case 1.5:
+                                case ($amazon_rating >= 1.5 && $amazon_rating <= 1.9):
                                     echo $star . $halfstar . $emptystar . $emptystar . $emptystar;
                                     break;
-                                case 2:
+                                case ($amazon_rating >= 2 && $amazon_rating <= 2.4):
                                     echo $star . $star . $emptystar . $emptystar . $emptystar;
                                     break;
-                                case 2.5:
+                                case ($amazon_rating >= 2.5 && $amazon_rating <= 2.9):
                                     echo $star . $star . $halfstar . $emptystar . $emptystar;
                                     break;
-                                case 3:
+                                case ($amazon_rating >= 3 && $amazon_rating <= 3.4):
                                     echo $star . $star . $star . $emptystar . $emptystar;
                                     break;
-                                case 3.5:
+                                case ($amazon_rating >= 3.5 && $amazon_rating <= 3.9):
                                     echo $star . $star . $star . $halfstar . $emptystar;
                                     break;
-                                case 4:
+                                case ($amazon_rating >= 4 && $amazon_rating <= 4.4):
                                     echo $star . $star . $star . $star . $emptystar;
                                     break;
-                                case 4.5:
+                                case ($amazon_rating >= 4.5 && $amazon_rating <= 4.9):
                                     echo $star . $star . $star . $star . $halfstar;
                                     break;
                                 case 5:
                                     echo $star . $star . $star . $star . $star;
                                     break;
                             } ?>
+                            <?php if ($amazon_rating_amount) : ?>
+                                <span class="amazon-product__rating--amount">
+                                    <?php echo $amazon_rating_amount; ?> <?php _e('reviews', 'apfwp');?>
+                                </span>
+                            <?php endif; ?>
                         <?php if($link_review) : ?>
                         </a>
                         <?php endif; ?>
@@ -175,7 +181,7 @@ get_header(); ?>
                         </p>
                         <div class="row">
                             <?php while( have_rows('related_videos') ): the_row(); $video = get_sub_field('video'); ?>
-                            <div class="col-12 col-sm-6">
+                            <div class="col-12 col-sm-6 mb-3 mb-lg-5">
                                 <div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item" src="<?php echo $video; ?>" allowfullscreen></iframe></div>
                             </div>
                             <?php endwhile; ?>
@@ -212,7 +218,7 @@ get_header(); ?>
                                     <div class="related-product">
                                         <figure class="related-product__image">
                                             <picture>
-                                                <?php echo get_the_post_thumbnail(get_the_ID(), 'full', array('class' => 'img-fluid')); ?>
+                                                <?php echo get_the_post_thumbnail(get_the_ID(), 'full', array()); ?>
                                             </picture>
                                         </figure>
                                         <h3 class="related-product__heading">

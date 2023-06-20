@@ -14,6 +14,9 @@
 // Set up custom post type
 include plugin_dir_path(__FILE__) . '/inc/post-type.php';
 
+// Set up custom post type
+include plugin_dir_path(__FILE__) . '/inc/taxonomy.php';
+
 // Check if ACF is installed
 if (class_exists('ACF')) {
     // Include ACF Pro fields
