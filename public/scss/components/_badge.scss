@@ -1,0 +1,25 @@
+/* =Badge on single product
+-------------------------------------------------------------- */
+.amazon-product {
+    &__badges {
+        display: flex;
+        margin: 1rem 0 .5rem;
+    }
+    &__badge {
+        background-color: #4160cb;
+        font-size: .75rem;
+        color: #fff;
+        padding: .2rem .4rem;
+        border-radius: .25rem;
+    }
+}
+
+/* =Badge on list overview
+-------------------------------------------------------------- */
+.product-listing {
+    .amazon-product {
+        &__badges {
+            margin: 0;
+        }
+    }
+}

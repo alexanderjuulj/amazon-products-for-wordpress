@@ -11,6 +11,7 @@ $link = get_field('amazon_link', get_the_ID());
 $link_review = get_field('amazon_link_reviews', get_the_ID());
 $amazon_rating = get_field('amazon_rating', get_the_ID());
 $amazon_rating_amount = get_field('amazon_rating_amount', get_the_ID());
+$amazon_badge = get_field('amazon_badge', get_the_ID());
 
 // Gallery
 $images = get_field('product_gallery');
@@ -37,6 +38,13 @@ get_header(); ?>
             </div>
             <div class="col-12 col-lg-6">
                 <section>
+                    <?php if($amazon_badge) : ?>
+                    <div class="amazon-product__badges">
+                        <div class="amazon-product__badge">
+                            <?php echo $amazon_badge; ?>
+                        </div>
+                    </div>
+                    <?php endif; ?>
                     <?php the_title('<h1 class="amazon-product__heading">', '</h1>'); ?>
                     <div class="amazon-product__rating" role="img" aria-label="Rated <?php echo $amazon_rating; ?> out of 5">
                         <?php if($link_review) : ?>

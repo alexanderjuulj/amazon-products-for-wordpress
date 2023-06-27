@@ -2,7 +2,7 @@
 /*
  * Plugin Name:       Amazon Product for WordPress
  * Description:       Set up products from Amazon and displays them in a custom post type.
- * Version:           1.0.0
+ * Version:           1.0.2
  * Author:            Alexander Juul Jakobsen
  * Author URI:        https://alexanderjuulj.com
  * License:           The MIT License

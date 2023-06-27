@@ -34,7 +34,7 @@ function apfwp_register_post_type() {
     		'menu_position'     => 21,
             'menu_icon'         => 'dashicons-amazon',
             'rewrite'           => array( 'slug' => 'amazon-product' ), // my custom slug
-            'supports'          => array( 'title', 'editor', 'thumbnail' ),
+            'supports'          => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
         )
     );
 }
