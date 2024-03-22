@@ -2,7 +2,7 @@
 /*
  * Plugin Name:       Amazon Product for WordPress
  * Description:       Set up products from Amazon and displays them in a custom post type.
- * Version:           1.0.2
+ * Version:           1.0.3
  * Author:            Alexander Juul Jakobsen
  * Author URI:        https://alexanderjuulj.com
  * License:           The MIT License
@@ -29,10 +29,29 @@ include plugin_dir_path(__FILE__) . '/inc/template-function.php';
 // Enqueue scripts and styles for the plugin 
 function apfwp_enqueue_scripts() {   
     // Flexslider by WooThemes. Used for the Gallery.
-    wp_enqueue_script( 'flexslider-script', plugin_dir_url( __FILE__ ) . 'inc/flexslider/jquery.flexslider-min.js', '2.7.2', true );
+    wp_enqueue_script(
+        'flexslider-script',
+        plugin_dir_url( __FILE__ ) . 'inc/flexslider/jquery.flexslider-min.js',
+        [],
+        '2.7.2',
+        [
+            'strategy' => 'defer',
+            'in_footer' => false
+        ],
+    );
     wp_enqueue_style( 'flexslider-style', plugin_dir_url( __FILE__ ) . 'inc/flexslider/flexslider.css', '2.7.2' );
+
     // Script activating Flexslider and Slick.js
-    wp_enqueue_script( 'amazon-product-script', plugin_dir_url( __FILE__ ) . 'public/js/amazon-products-min.js', '1.0.0', true );
+    wp_enqueue_script(
+        'amazon-product-script',
+        plugin_dir_url( __FILE__ ) . 'public/js/amazon-products.js',
+        [],
+        '1.0.0',
+        [
+            'strategy' => 'defer',
+            'in_footer' => false
+        ],
+    );
     // Styles
     wp_enqueue_style( 'amazon-product-style', plugin_dir_url( __FILE__ ) . 'public/scss/main.css', '1.0.0' );
 }
